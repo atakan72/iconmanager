@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - (add new entries here)
 
+## [1.1.3.1] - 2025-09-18
+### Fixed
+- Prevent potential fatal on activation by guarding GitHub updater constants (switch from const to define with checks).
+
 ## [1.1.3] - 2025-09-18
 ### Added
 - GitHub auto-update integration (shows update notice when new GitHub release tag exists).
@@ -58,7 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Old plugin specific prefix usage (kept aliases only for backward compatibility).
 
-[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.3...HEAD
+[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.3.1...HEAD
+[1.1.3.1]: https://github.com/atakan72/iconmanager/compare/v1.1.3...v1.1.3.1
 [1.1.3]: https://github.com/atakan72/iconmanager/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/atakan72/iconmanager/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/atakan72/iconmanager/compare/v1.1.0...v1.1.1

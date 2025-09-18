@@ -6,9 +6,13 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-// Configuration: repository data.
-const ICONMANAGER_GH_OWNER = 'atakan72';
-const ICONMANAGER_GH_REPO  = 'iconmanager';
+// Configuration: repository data (guarded defines to avoid fatal redeclare in edge cases).
+if ( ! defined( 'ICONMANAGER_GH_OWNER' ) ) {
+	define( 'ICONMANAGER_GH_OWNER', 'atakan72' );
+}
+if ( ! defined( 'ICONMANAGER_GH_REPO' ) ) {
+	define( 'ICONMANAGER_GH_REPO', 'iconmanager' );
+}
 
 /**
  * Build transient key.
