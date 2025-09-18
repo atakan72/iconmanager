@@ -22,57 +22,57 @@ function iconmanager_render_admin_page() {
     ?>
     <div class="wrap">
         <h1>🎨 Icon Manager</h1>
-        <p><?php _e( 'Verwalte Brand & UI SVG Icons lokal (DSGVO-konform).', 'iconmanager' ); ?></p>
+    <p><?php _e( 'Manage Brand & UI SVG icons locally (privacy-friendly).', 'iconmanager' ); ?></p>
 
         <p>
-            <button id="iconmanager-help-toggle" class="button">❓ <?php _e('Hilfe / Anleitung','iconmanager'); ?></button>
-            <button id="iconmanager-options-toggle" class="button">⚙️ <?php _e('Optionen','iconmanager'); ?></button>
-            <button id="iconmanager-licenses-toggle" class="button">🧾 <?php _e('Lizenzen','iconmanager'); ?></button>
+            <button id="iconmanager-help-toggle" class="button">❓ <?php _e('Help / Guide','iconmanager'); ?></button>
+            <button id="iconmanager-options-toggle" class="button">⚙️ <?php _e('Options','iconmanager'); ?></button>
+            <button id="iconmanager-licenses-toggle" class="button">🧾 <?php _e('Licenses','iconmanager'); ?></button>
         </p>
 
         <div id="iconmanager-help" style="display:none;margin:15px 0;padding:15px;border:1px solid #ccd0d4;background:#fff;max-width:980px;">
-            <h2 style="margin-top:0;">ℹ️ <?php _e('Anleitung','iconmanager'); ?></h2>
-            <p><strong><?php _e('Speicherort','iconmanager'); ?>:</strong> <code><?php echo esc_html( wp_upload_dir()['basedir'] . '/iconmanager-icons/{brands|ui}' ); ?></code><br>
-            <?php _e('Icons werden im Uploads-Verzeichnis gespeichert und bleiben bei Plugin-Updates erhalten.','iconmanager'); ?></p>
-            <p><strong><?php _e('Verwendung im Theme','iconmanager'); ?>:</strong><br>
+            <h2 style="margin-top:0;">ℹ️ <?php _e('Guide','iconmanager'); ?></h2>
+            <p><strong><?php _e('Storage path','iconmanager'); ?>:</strong> <code><?php echo esc_html( wp_upload_dir()['basedir'] . '/iconmanager-icons/{brands|ui}' ); ?></code><br>
+            <?php _e('Icons are stored in uploads and persist across plugin updates.','iconmanager'); ?></p>
+            <p><strong><?php _e('Theme usage','iconmanager'); ?>:</strong><br>
             <code>&lt;?php echo iconmanager_render_icon('facebook','brand',24); ?&gt;</code><br>
             <code>&lt;?php iconmanager_icon('menu','ui',32,'#666'); ?&gt;</code><br>
             Shortcode: <code>[icon name="menu" type="ui" size="32" color="#666" class="me-2"]</code></p>
-            <p><strong><?php _e('Medienbibliothek (optional)','iconmanager'); ?>:</strong><br>
-            <?php _e('Für Standard-Verwendung ist kein Import in die Medien nötig. Wenn du Icons z.B. in Gutenberg Bild- oder Galerie-Blöcken auswählbar machen willst, kannst du sie in die Mediathek importieren.','iconmanager'); ?></p>
+            <p><strong><?php _e('Media Library (optional)','iconmanager'); ?>:</strong><br>
+            <?php _e('For normal usage no import into the media library is required. Import only if you want icons selectable inside Gutenberg blocks.','iconmanager'); ?></p>
             <?php
             // Hinweis falls alter Ordner existiert
             $old_dir = trailingslashit( wp_upload_dir()['basedir'] ) . 'iconmanagement-dsgvo-icons';
             if ( is_dir( $old_dir ) ) {
-                echo '<p style="margin-top:15px;" class="notice notice-info"><strong>' . esc_html__('Hinweis:','iconmanager') . '</strong> ' . esc_html__('Alter Icon-Ordner erkannt, Inhalte wurden bei Aktivierung migriert (falls noch nicht vorhanden).','iconmanager') . '</p>';
+                echo '<p style="margin-top:15px;" class="notice notice-info"><strong>' . esc_html__('Notice:','iconmanager') . '</strong> ' . esc_html__('Old icon folder detected, contents migrated on activation (if not present).','iconmanager') . '</p>';
             }
-            echo '<p style="margin-top:10px;font-size:12px;color:#555;">' . sprintf( esc_html__( 'Credits: Brand Icons von %1$s (CC0) – UI Icons von %2$s (ISC).', 'iconmanager' ), 'Simple Icons', 'Lucide' ) . '</p>';            
+            echo '<p style="margin-top:10px;font-size:12px;color:#555;">' . sprintf( esc_html__( 'Credits: Brand icons from %1$s (CC0) – UI icons from %2$s (ISC).', 'iconmanager' ), 'Simple Icons', 'Lucide' ) . '</p>';            
             ?>
         </div>
 
         <div id="iconmanager-licenses" style="display:none;margin:15px 0;padding:15px;border:1px solid #ccd0d4;background:#fff;max-width:900px;">
-            <h2 style="margin-top:0;">🧾 <?php _e('Lizenzen & Hinweise','iconmanager'); ?></h2>
-            <h3><?php _e('Hinweis zu den Icon-Lizenzen','iconmanager'); ?></h3>
-            <p><strong>Lucide:</strong> <?php _e('Lizenztext muss enthalten sein. Credits sind freiwillig.','iconmanager'); ?> <a href="https://lucide.dev/license" target="_blank" rel="noopener">lucide.dev/license</a></p>
-            <p><strong>Simple Icons:</strong> <?php _e('Meist frei nutzbar, aber Markenrechte beachten. Credits freiwillig.','iconmanager'); ?> <a href="https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md" target="_blank" rel="noopener">DISCLAIMER.md</a></p>
-            <h3><?php _e('Empfohlener Credit (optional)','iconmanager'); ?></h3>
-            <textarea id="iconmanager-credit-snippet" style="width:100%;height:70px;">Icons: Brand Icons (Simple Icons) & UI Icons (Lucide).</textarea>
-            <p><button class="button" id="iconmanager-copy-credit">📋 <?php _e('Credit kopieren','iconmanager'); ?></button> <span id="iconmanager-copy-status" style="margin-left:10px;font-size:12px;color:#4b8;"></span></p>
+            <h2 style="margin-top:0;">🧾 <?php _e('Licenses & Notes','iconmanager'); ?></h2>
+            <h3><?php _e('Icon license info','iconmanager'); ?></h3>
+            <p><strong>Lucide:</strong> <?php _e('License text must be included. Credits optional.','iconmanager'); ?> <a href="https://lucide.dev/license" target="_blank" rel="noopener">lucide.dev/license</a></p>
+            <p><strong>Simple Icons:</strong> <?php _e('Mostly free to use but respect brand rights. Credits optional.','iconmanager'); ?> <a href="https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md" target="_blank" rel="noopener">DISCLAIMER.md</a></p>
+            <h3><?php _e('Suggested credit (optional)','iconmanager'); ?></h3>
+            <textarea id="iconmanager-credit-snippet" style="width:100%;height:70px;">Icons: Brand icons (Simple Icons) & UI icons (Lucide).</textarea>
+            <p><button class="button" id="iconmanager-copy-credit">📋 <?php _e('Copy credit','iconmanager'); ?></button> <span id="iconmanager-copy-status" style="margin-left:10px;font-size:12px;color:#4b8;"></span></p>
         </div>
 
         <div id="iconmanager-options" style="display:none;margin:15px 0;padding:15px;border:1px solid #ccd0d4;background:#fff;max-width:780px;">
-            <h2 style="margin-top:0;">⚙️ <?php _e('Optionen & Tools','iconmanager'); ?></h2>
+            <h2 style="margin-top:0;">⚙️ <?php _e('Options & Tools','iconmanager'); ?></h2>
             <form id="iconmanager-options-form">
                 <?php wp_nonce_field( 'iconmanager_save_options', 'iconmanager_options_nonce' ); ?>
                 <p>
-                    <label><input type="checkbox" name="show_import" value="1" <?php checked( $show_import ); ?>> <?php _e('Pro Icon "Import" Button anzeigen','iconmanager'); ?></label>
+                    <label><input type="checkbox" name="show_import" value="1" <?php checked( $show_import ); ?>> <?php _e('Show per-icon "Import" button','iconmanager'); ?></label>
                 </p>
-                <p><button type="submit" class="button button-primary">💾 <?php _e('Speichern','iconmanager'); ?></button></p>
+                <p><button type="submit" class="button button-primary">💾 <?php _e('Save','iconmanager'); ?></button></p>
             </form>
             <hr>
-            <h3>🗂️ <?php _e('Mediathek Bulk-Import','iconmanager'); ?></h3>
-            <p><?php _e('Alle vorhandenen Icons in die WordPress Medienbibliothek importieren. Bereits importierte werden übersprungen.','iconmanager'); ?></p>
-            <p><button class="button" id="iconmanager-import-all-media">🗂️ <?php _e('Alle Icons in Mediathek importieren','iconmanager'); ?></button>
+            <h3>🗂️ <?php _e('Media Library bulk import','iconmanager'); ?></h3>
+            <p><?php _e('Import all available icons into the WordPress Media Library. Already imported ones are skipped.','iconmanager'); ?></p>
+            <p><button class="button" id="iconmanager-import-all-media">🗂️ <?php _e('Import all icons into media library','iconmanager'); ?></button>
             <span id="iconmanager-import-all-status" style="margin-left:10px;"></span></p>
         </div>
 
@@ -85,8 +85,8 @@ function iconmanager_render_admin_page() {
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
                     <div class="card">
                         <h2>📦 <?php _e( 'Social / Brand Icons', 'iconmanager' ); ?></h2>
-                        <p><?php _e( 'Lädt ein Set häufiger Social Media Icons herunter.', 'iconmanager' ); ?></p>
-                        <button id="iconmanager-download-common-brands" class="button button-primary"><?php _e( 'Alle Brand Icons laden', 'iconmanager' ); ?></button>
+                        <p><?php _e( 'Download a set of common social media icons.', 'iconmanager' ); ?></p>
+                        <button id="iconmanager-download-common-brands" class="button button-primary"><?php _e( 'Download all brand icons', 'iconmanager' ); ?></button>
                         <div style="margin-top:10px;">
                             <input type="text" id="iconmanager-single-brand" placeholder="facebook, twitter, github" />
                             <button id="iconmanager-download-single-brand" class="button">Download</button>
@@ -94,8 +94,8 @@ function iconmanager_render_admin_page() {
                     </div>
                     <div class="card">
                         <h2>🎛️ <?php _e( 'UI Icons', 'iconmanager' ); ?></h2>
-                        <p><?php _e( 'Basis Icon-Set für Navigation & UI.', 'iconmanager' ); ?></p>
-                        <button id="iconmanager-download-common-ui" class="button button-primary"><?php _e( 'Alle UI Icons laden', 'iconmanager' ); ?></button>
+                        <p><?php _e( 'Basic icon set for navigation & UI.', 'iconmanager' ); ?></p>
+                        <button id="iconmanager-download-common-ui" class="button button-primary"><?php _e( 'Download all UI icons', 'iconmanager' ); ?></button>
                         <div style="margin-top:10px;">
                             <input type="text" id="iconmanager-single-ui" placeholder="menu, search, arrow-right" />
                             <button id="iconmanager-download-single-ui" class="button">Download</button>
@@ -105,10 +105,10 @@ function iconmanager_render_admin_page() {
             </div>
             <div id="iconmanager-panel-icons" class="iconmanager-tab-panel" style="display:none;">
                 <div class="card" style="margin-top:0;">
-                    <h2 style="display:flex;align-items:center;gap:12px;">📋 <?php _e( 'Verfügbare Icons', 'iconmanager' ); ?> (<span id="iconmanager-count-total"><?php echo count( $icons['brands'] ) + count( $icons['ui'] ); ?></span>)
+                    <h2 style="display:flex;align-items:center;gap:12px;">📋 <?php _e( 'Available Icons', 'iconmanager' ); ?> (<span id="iconmanager-count-total"><?php echo count( $icons['brands'] ) + count( $icons['ui'] ); ?></span>)
                     <span style="flex:1"></span>
                     <input type="search" id="iconmanager-filter" placeholder="<?php esc_attr_e('Filter...','iconmanager'); ?>" style="max-width:220px;">
-                    <span id="iconmanager-loading" style="display:none;margin-left:10px;font-size:12px;opacity:.75;">⏳ <?php esc_html_e('Aktualisiere...','iconmanager'); ?></span>
+                    <span id="iconmanager-loading" style="display:none;margin-left:10px;font-size:12px;opacity:.75;">⏳ <?php esc_html_e('Refreshing...','iconmanager'); ?></span>
                     </h2>
                     <h3 style="margin-top:20px;">🏢 Brand (<span id="iconmanager-count-brand"><?php echo count( $icons['brands'] ); ?></span>)</h3>
                     <div id="iconmanager-grid-brands" class="iconmanager-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:30px;">
@@ -233,8 +233,8 @@ function iconmanager_render_admin_page() {
                 $('#iconmanager-loading').fadeOut(120);
             });
         }
-    $('#iconmanager-download-common-brands').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_brands', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Alle Brand Icons laden','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
-    $('#iconmanager-download-common-ui').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_ui', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Alle UI Icons laden','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
+    $('#iconmanager-download-common-brands').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_brands', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Download all brand icons','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
+    $('#iconmanager-download-common-ui').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_ui', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Download all UI icons','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
     $('#iconmanager-download-single-brand').on('click',function(){ const n=$('#iconmanager-single-brand').val(); if(!n){alert('Name?');return;} ajaxAction({ action:'iconmanager_download_brand_icon', data:{icon_name:n}, button:$(this), busyText:'…', restoreText:'Download', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
     $('#iconmanager-download-single-ui').on('click',function(){ const n=$('#iconmanager-single-ui').val(); if(!n){alert('Name?');return;} ajaxAction({ action:'iconmanager_download_ui_icon', data:{icon_name:n}, button:$(this), busyText:'…', restoreText:'Download', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
 
@@ -279,10 +279,10 @@ function iconmanager_render_admin_page() {
             ajaxAction({
                 action:'iconmanager_import_all',
                 button:$(this),
-                busyText:'<?php echo esc_js(__('Import läuft…','iconmanager')); ?>',
-                restoreText:'🗂️ <?php echo esc_js(__('Alle Icons in Mediathek importieren','iconmanager')); ?>',
+                busyText:'<?php echo esc_js(__('Import running…','iconmanager')); ?>',
+                restoreText:'🗂️ <?php echo esc_js(__('Import all icons into media library','iconmanager')); ?>',
                 onSuccess:function(r){
-                    if(r.success){ let ok=0; r.data.forEach(function(x){ if(Number.isInteger(x.result)) ok++; }); status.text(ok+' <?php echo esc_js(__('Icons importiert','iconmanager')); ?>'); }
+                    if(r.success){ let ok=0; r.data.forEach(function(x){ if(Number.isInteger(x.result)) ok++; }); status.text(ok+' <?php echo esc_js(__('icons imported','iconmanager')); ?>'); }
                     else { status.text(r.data||'Error'); }
                 },
                 onAlways:refreshIcons
@@ -295,16 +295,16 @@ function iconmanager_render_admin_page() {
                 action:'iconmanager_save_options',
                 data: frm.serialize(), // will become string; handled below
                 button: btn,
-                busyText:'<?php echo esc_js(__('Speichern…','iconmanager')); ?>',
-                restoreText:'💾 <?php echo esc_js(__('Speichern','iconmanager')); ?>',
-                onSuccess:function(r){ alert(r.success ? '<?php echo esc_js(__('Gespeichert','iconmanager')); ?>' : (r.data||'Error')); if(r.success){ window.iconmanagerShowImport = frm.find('input[name="show_import"]').is(':checked'); applyImportVisibility(); } }
+                busyText:'<?php echo esc_js(__('Saving…','iconmanager')); ?>',
+                restoreText:'💾 <?php echo esc_js(__('Save','iconmanager')); ?>',
+                onSuccess:function(r){ alert(r.success ? '<?php echo esc_js(__('Saved','iconmanager')); ?>' : (r.data||'Error')); if(r.success){ window.iconmanagerShowImport = frm.find('input[name="show_import"]').is(':checked'); applyImportVisibility(); } }
             });
         });
 
         $('#iconmanager-copy-credit').on('click',function(e){
             e.preventDefault();
             const txt=$('#iconmanager-credit-snippet').val();
-            const done=()=>{ $('#iconmanager-copy-status').text('<?php echo esc_js(__('Kopiert','iconmanager')); ?>'); setTimeout(()=>$('#iconmanager-copy-status').text(''),2500); };
+            const done=()=>{ $('#iconmanager-copy-status').text('<?php echo esc_js(__('Copied','iconmanager')); ?>'); setTimeout(()=>$('#iconmanager-copy-status').text(''),2500); };
             if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(done); } else { $('#iconmanager-credit-snippet').select(); document.execCommand('copy'); done(); }
         });
     });

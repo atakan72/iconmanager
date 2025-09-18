@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - (add new entries here)
 
+## [1.1.2] - 2025-09-18
+### Added
+- English default source strings (previous mixed German).
+- Translation template `iconmanager.pot` and German translation file `iconmanager-de_DE.po`.
+
+### Changed
+- Replaced inline German admin UI text with English originals to standardize i18n workflow.
+
+### Notes
+- Existing German installs still see German via new translation file.
+- Custom translations: copy `iconmanager.pot` and create your locale `.po/.mo`.
+
 ## [1.1.1] - 2025-09-18
 ### Fixed
 - Dynamisches Aktualisieren der Icon-Listen nach Download / Import (kein manueller Reload nötig).
@@ -38,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Old plugin specific prefix usage (kept aliases only for backward compatibility).
 
-[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/atakan72/iconmanager/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/atakan72/iconmanager/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/atakan72/iconmanager/releases/tag/v1.1.0

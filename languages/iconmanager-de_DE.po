@@ -1,0 +1,129 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: iconmanager 1.1.2\n"
+"Language: de_DE\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Manage Brand & UI SVG icons locally (privacy-friendly)."
+msgstr "Verwalte Brand- & UI-SVG-Icons lokal (datenschutzfreundlich)."
+
+msgid "Help / Guide"
+msgstr "Hilfe / Anleitung"
+
+msgid "Options"
+msgstr "Optionen"
+
+msgid "Licenses"
+msgstr "Lizenzen"
+
+msgid "Guide"
+msgstr "Anleitung"
+
+msgid "Storage path"
+msgstr "Speicherort"
+
+msgid "Icons are stored in uploads and persist across plugin updates."
+msgstr "Icons werden im Uploads-Verzeichnis gespeichert und bleiben bei Plugin-Updates erhalten."
+
+msgid "Theme usage"
+msgstr "Verwendung im Theme"
+
+msgid "Media Library (optional)"
+msgstr "Medienbibliothek (optional)"
+
+msgid "For normal usage no import into the media library is required. Import only if you want icons selectable inside Gutenberg blocks."
+msgstr "Für Standard-Verwendung ist kein Import in die Medien nötig. Nur importieren, wenn Icons in Gutenberg-Blöcken auswählbar sein sollen."
+
+msgid "Notice:"
+msgstr "Hinweis:"
+
+msgid "Old icon folder detected, contents migrated on activation (if not present)."
+msgstr "Alter Icon-Ordner erkannt, Inhalte bei Aktivierung migriert (falls nicht vorhanden)."
+
+msgid "Credits: Brand icons from %1$s (CC0) – UI icons from %2$s (ISC)."
+msgstr "Credits: Brand Icons von %1$s (CC0) – UI Icons von %2$s (ISC)."
+
+msgid "Licenses & Notes"
+msgstr "Lizenzen & Hinweise"
+
+msgid "Icon license info"
+msgstr "Hinweis zu den Icon-Lizenzen"
+
+msgid "License text must be included. Credits optional."
+msgstr "Lizenztext muss enthalten sein. Credits optional."
+
+msgid "Mostly free to use but respect brand rights. Credits optional."
+msgstr "Meist frei nutzbar, aber Markenrechte beachten. Credits optional."
+
+msgid "Suggested credit (optional)"
+msgstr "Empfohlener Credit (optional)"
+
+msgid "Copy credit"
+msgstr "Credit kopieren"
+
+msgid "Options & Tools"
+msgstr "Optionen & Tools"
+
+msgid "Show per-icon \"Import\" button"
+msgstr "Pro Icon \"Import\" Button anzeigen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Media Library bulk import"
+msgstr "Mediathek Bulk-Import"
+
+msgid "Import all available icons into the WordPress Media Library. Already imported ones are skipped."
+msgstr "Alle vorhandenen Icons in die Medienbibliothek importieren. Bereits importierte werden übersprungen."
+
+msgid "Import all icons into media library"
+msgstr "Alle Icons in Mediathek importieren"
+
+msgid "Downloads"
+msgstr "Downloads"
+
+msgid "Icons"
+msgstr "Icons"
+
+msgid "Social / Brand Icons"
+msgstr "Social / Brand Icons"
+
+msgid "Download a set of common social media icons."
+msgstr "Lädt ein Set häufiger Social-Media-Icons herunter."
+
+msgid "Download all brand icons"
+msgstr "Alle Brand Icons laden"
+
+msgid "UI Icons"
+msgstr "UI Icons"
+
+msgid "Basic icon set for navigation & UI."
+msgstr "Basis Icon-Set für Navigation & UI."
+
+msgid "Download all UI icons"
+msgstr "Alle UI Icons laden"
+
+msgid "Available Icons"
+msgstr "Verfügbare Icons"
+
+msgid "Refreshing..."
+msgstr "Aktualisiere..."
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Import running…"
+msgstr "Import läuft…"
+
+msgid "icons imported"
+msgstr "Icons importiert"
+
+msgid "Saving…"
+msgstr "Speichern…"
+
+msgid "Saved"
+msgstr "Gespeichert"
+
+msgid "Copied"
+msgstr "Kopiert"
