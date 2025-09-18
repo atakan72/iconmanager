@@ -15,22 +15,24 @@ Lightweight GDPR-friendly WordPress plugin to locally download & manage Brand (S
 </div>
 
 ## Table of Contents
-- [Why / Motivation](#why--motivation)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Shortcode & Template API](#shortcode--template-api)
-- [Media Library Import (Optional)](#media-library-import-optional)
-- [Migration from old plugin](#migration-from-old-plugin)
-- [Caching & Performance](#caching--performance)
-- [GDPR / Privacy](#gdpr--privacy)
-- [Icon Sources & Licenses](#icon-sources--licenses)
-- [Development](#development)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-- [Security](#security)
-- [License](#license)
+- [Icon Manager](#icon-manager)
+  - [Table of Contents](#table-of-contents)
+  - [Why / Motivation](#why--motivation)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Composer / Packagist](#composer--packagist)
+  - [Usage](#usage)
+    - [Parameter Reference](#parameter-reference)
+  - [Media Library Import (Optional)](#media-library-import-optional)
+  - [Caching \& Performance](#caching--performance)
+  - [GDPR / Privacy](#gdpr--privacy)
+  - [Icon Sources \& Licenses](#icon-sources--licenses)
+  - [Development](#development)
+  - [Contributing](#contributing)
+  - [Changelog](#changelog)
+  - [Security](#security)
+  - [License](#license)
 
 ## Why / Motivation
 Many themes embed remote icon CDNs (tracking / reliability issues). Icon Manager stores SVG files locally after first download and serves them with long-term cache & security headers. Minimal footprint, no frontend bloat.
@@ -87,15 +89,6 @@ Use the admin help panel buttons:
 - Single: per-icon “Import” buttons
 
 Each imported SVG is stored in the date-based uploads folder and tagged with meta `_iconmanager_icon_name` for duplicate detection.
-
-## Migration from old plugin
-| Old (ICONMANAGEMENT.DSGVO) | New (Icon Manager) |
-|----------------------------|--------------------|
-| `iconmgmt_dsgvo_render_icon` | `iconmanager_render_icon` |
-| Upload path: `iconmanagement-dsgvo-icons` | `iconmanager-icons` |
-| Textdomain: `iconmanagement-dsgvo` | `iconmanager` |
-
-Existing pages using `[icon ...]` keep working.
 
 ## Caching & Performance
 - Rendered HTML cached (object cache) for 7 days

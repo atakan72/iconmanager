@@ -3,17 +3,18 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function iconmanager_admin_menu() {
-    add_menu_page(
+    // Parent kann via Filter überschrieben werden (z.B. 'options-general.php', 'tools.php')
+    $parent = apply_filters( 'iconmanager_admin_parent', 'tools.php' ); // Standard jetzt: Werkzeuge
+    add_submenu_page(
+        $parent,
         __( 'Icon Manager', 'iconmanager' ),
-        __( 'Icons', 'iconmanager' ),
+        __( 'Icon Manager', 'iconmanager' ),
         'manage_options',
         'iconmanager',
-        'iconmanager_render_admin_page',
-        'dashicons-art',
-        59
+        'iconmanager_render_admin_page'
     );
 }
-add_action( 'admin_menu', 'iconmanager_admin_menu' );
+add_action( 'admin_menu', 'iconmanager_admin_menu', 20 );
 
 function iconmanager_render_admin_page() {
     $icons = iconmanager_get_available_icons();
@@ -107,6 +108,7 @@ function iconmanager_render_admin_page() {
                     <h2 style="display:flex;align-items:center;gap:12px;">📋 <?php _e( 'Verfügbare Icons', 'iconmanager' ); ?> (<span id="iconmanager-count-total"><?php echo count( $icons['brands'] ) + count( $icons['ui'] ); ?></span>)
                     <span style="flex:1"></span>
                     <input type="search" id="iconmanager-filter" placeholder="<?php esc_attr_e('Filter...','iconmanager'); ?>" style="max-width:220px;">
+                    <span id="iconmanager-loading" style="display:none;margin-left:10px;font-size:12px;opacity:.75;">⏳ <?php esc_html_e('Aktualisiere...','iconmanager'); ?></span>
                     </h2>
                     <h3 style="margin-top:20px;">🏢 Brand (<span id="iconmanager-count-brand"><?php echo count( $icons['brands'] ); ?></span>)</h3>
                     <div id="iconmanager-grid-brands" class="iconmanager-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:30px;">
@@ -145,6 +147,51 @@ function iconmanager_render_admin_page() {
     jQuery(function($){
         window.iconmanagerShowImport = <?php echo $show_import ? 'true' : 'false'; ?>;
         var lastFilter = '';
+        // Generic helper to avoid "hängende" Buttons
+        function ajaxAction(opts){
+            const {action, data={}, button=null, busyText='…', restoreText=null, onSuccess=null, onAlways=null} = opts;
+            let originalText = null;
+            if(button){ originalText = button.text(); button.prop('disabled',true).text(busyText); }
+            let payload;
+            if(typeof data === 'string') { payload = data + '&action=' + encodeURIComponent(action); }
+            else { payload = Object.assign({action:action}, data); }
+            return $.ajax({
+                url: ajaxurl,
+                method: 'POST',
+                data: payload,
+                dataType: 'text' // wir parsen selber tolerant
+            }).done(function(raw){
+                let txt = (raw||'').trim();
+                // Entferne BOM / Zero-width chars
+                txt = txt.replace(/^[\uFEFF\u200B]+/,'');
+                // Versuche JSON Block zu extrahieren (falls Notices davor)
+                let jsonStart = txt.indexOf('{');
+                let jsonEnd = txt.lastIndexOf('}');
+                if(jsonStart > -1 && jsonEnd > jsonStart){
+                    txt = txt.substring(jsonStart, jsonEnd+1);
+                }
+                let obj = null;
+                try { obj = JSON.parse(txt); } catch(e){
+                    console.warn('JSON Parse Fehler, Rohantwort (gekürzt):', txt.slice(0,300));
+                    alert('Fehler: Ungültige JSON-Antwort');
+                    return; }
+                if(obj && obj.success === false){
+                    alert('Fehler: '+ (obj.data || 'Unbekannt'));
+                } else if(onSuccess){
+                    try { onSuccess(obj); } catch(e){ console.error(e); }
+                }
+            }).fail(function(xhr){
+                let msg = 'HTTP ' + xhr.status;
+                if(xhr.responseText){
+                    // Versuch dennoch zu parsen
+                    try { const tmp = JSON.parse(xhr.responseText); if(tmp && tmp.data) msg = tmp.data; } catch(_){}
+                }
+                alert('Fehler: '+ msg);
+            }).always(function(){
+                if(button){ button.prop('disabled',false).text(restoreText || originalText || 'OK'); }
+                if(onAlways){ try { onAlways(); } catch(e){ console.error(e); } }
+            });
+        }
         function applyFilter(){
             var q = lastFilter.toLowerCase();
             $('.iconmanager-grid .iconmanager-tile').each(function(){
@@ -170,22 +217,26 @@ function iconmanager_render_admin_page() {
         function simplePost(action,data,cb){ $.post(ajaxurl,Object.assign({action:action},data||{}),function(r){ cb && cb(r); }); }
         function notify(result){ if(result && typeof result==='object'){ alert(result.success ? (result.data||'OK') : (result.data||'Error')); } }
         function refreshIcons(){
+            $('#iconmanager-loading').show();
             $.post(ajaxurl,{action:'iconmanager_get_icons'},function(r){
-                if(!r.success) return;
-                $('#iconmanager-grid-brands').html(r.data.brands_html);
-                $('#iconmanager-grid-ui').html(r.data.ui_html);
-                $('#iconmanager-count-brand').text(r.data.counts.brand);
-                $('#iconmanager-count-ui').text(r.data.counts.ui);
-                $('#iconmanager-count-total').text(r.data.counts.total);
-                bindSingleImports();
-                applyImportVisibility();
-                applyFilter();
+                if(r && r.success){
+                    $('#iconmanager-grid-brands').html(r.data.brands_html);
+                    $('#iconmanager-grid-ui').html(r.data.ui_html);
+                    $('#iconmanager-count-brand').text(r.data.counts.brand);
+                    $('#iconmanager-count-ui').text(r.data.counts.ui);
+                    $('#iconmanager-count-total').text(r.data.counts.total);
+                    bindSingleImports();
+                    applyImportVisibility();
+                    applyFilter();
+                }
+            }).always(function(){
+                $('#iconmanager-loading').fadeOut(120);
             });
         }
-        $('#iconmanager-download-common-brands').on('click',function(){ const btn=$(this); btn.prop('disabled',true).text('…'); simplePost('iconmanager_download_common_brands',{},function(r){ notify(r); btn.prop('disabled',false).text('<?php echo esc_js(__('Alle Brand Icons laden','iconmanager')); ?>'); refreshIcons(); }); });
-        $('#iconmanager-download-common-ui').on('click',function(){ const btn=$(this); btn.prop('disabled',true).text('…'); simplePost('iconmanager_download_common_ui',{},function(r){ notify(r); btn.prop('disabled',false).text('<?php echo esc_js(__('Alle UI Icons laden','iconmanager')); ?>'); refreshIcons(); }); });
-        $('#iconmanager-download-single-brand').on('click',function(){ const n=$('#iconmanager-single-brand').val(); if(!n){alert('Name?');return;} const b=$(this); b.prop('disabled',true).text('…'); simplePost('iconmanager_download_brand_icon',{icon_name:n},function(r){ notify(r); b.prop('disabled',false).text('Download'); refreshIcons(); }); });
-        $('#iconmanager-download-single-ui').on('click',function(){ const n=$('#iconmanager-single-ui').val(); if(!n){alert('Name?');return;} const b=$(this); b.prop('disabled',true).text('…'); simplePost('iconmanager_download_ui_icon',{icon_name:n},function(r){ notify(r); b.prop('disabled',false).text('Download'); refreshIcons(); }); });
+    $('#iconmanager-download-common-brands').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_brands', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Alle Brand Icons laden','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
+    $('#iconmanager-download-common-ui').on('click',function(){ ajaxAction({ action:'iconmanager_download_common_ui', button:$(this), busyText:'…', restoreText:'<?php echo esc_js(__('Alle UI Icons laden','iconmanager')); ?>', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
+    $('#iconmanager-download-single-brand').on('click',function(){ const n=$('#iconmanager-single-brand').val(); if(!n){alert('Name?');return;} ajaxAction({ action:'iconmanager_download_brand_icon', data:{icon_name:n}, button:$(this), busyText:'…', restoreText:'Download', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
+    $('#iconmanager-download-single-ui').on('click',function(){ const n=$('#iconmanager-single-ui').val(); if(!n){alert('Name?');return;} ajaxAction({ action:'iconmanager_download_ui_icon', data:{icon_name:n}, button:$(this), busyText:'…', restoreText:'Download', onSuccess:function(r){ notify(r); }, onAlways:refreshIcons }); });
 
         $('#iconmanager-help-toggle').on('click',function(e){ e.preventDefault(); $('#iconmanager-help').slideToggle(150); });
         $('#iconmanager-options-toggle').on('click',function(e){ e.preventDefault(); $('#iconmanager-options').slideToggle(150); });
@@ -195,9 +246,14 @@ function iconmanager_render_admin_page() {
             $('.iconmanager-import-single').off('click').on('click',function(e){
                 e.preventDefault(); const btn=$(this); const icon=btn.data('icon'); const type=btn.data('type');
                 btn.prop('disabled',true).text('…');
-                $.post(ajaxurl,{action:'iconmanager_import_single',icon:icon,type:type},function(r){
-                    alert(r.success ? r.data : (r.data||'Error'));
-                    btn.prop('disabled',false).text('⬆ <?php echo esc_js(__('Import','iconmanager')); ?>');
+                ajaxAction({
+                    action:'iconmanager_import_single',
+                    data:{icon:icon,type:type},
+                    button:btn,
+                    busyText:'…',
+                    restoreText:'⬆ <?php echo esc_js(__('Import','iconmanager')); ?>',
+                    onSuccess:function(r){ alert(r.success ? r.data : (r.data||'Error')); },
+                    onAlways:function(){ refreshIcons(); }
                 });
             });
         }
@@ -219,22 +275,29 @@ function iconmanager_render_admin_page() {
         applyImportVisibility();
 
         $('#iconmanager-import-all-media').on('click',function(e){
-            e.preventDefault(); const btn=$(this); const status=$('#iconmanager-import-all-status');
-            btn.prop('disabled',true).text('<?php echo esc_js(__('Import läuft…','iconmanager')); ?>'); status.text('');
-            $.post(ajaxurl,{action:'iconmanager_import_all'},function(r){
-                if(r.success){ let ok=0; r.data.forEach(function(x){ if(Number.isInteger(x.result)) ok++; }); status.text(ok+' <?php echo esc_js(__('Icons importiert','iconmanager')); ?>'); refreshIcons(); }
-                else { status.text(r.data||'Error'); }
-                btn.prop('disabled',false).text('🗂️ <?php echo esc_js(__('Alle Icons in Mediathek importieren','iconmanager')); ?>');
+            e.preventDefault(); const status=$('#iconmanager-import-all-status'); status.text('');
+            ajaxAction({
+                action:'iconmanager_import_all',
+                button:$(this),
+                busyText:'<?php echo esc_js(__('Import läuft…','iconmanager')); ?>',
+                restoreText:'🗂️ <?php echo esc_js(__('Alle Icons in Mediathek importieren','iconmanager')); ?>',
+                onSuccess:function(r){
+                    if(r.success){ let ok=0; r.data.forEach(function(x){ if(Number.isInteger(x.result)) ok++; }); status.text(ok+' <?php echo esc_js(__('Icons importiert','iconmanager')); ?>'); }
+                    else { status.text(r.data||'Error'); }
+                },
+                onAlways:refreshIcons
             });
         });
 
         $('#iconmanager-options-form').on('submit',function(e){
             e.preventDefault(); const frm=$(this); const btn=frm.find('button[type="submit"]');
-            btn.prop('disabled',true).text('<?php echo esc_js(__('Speichern…','iconmanager')); ?>');
-            $.post(ajaxurl,frm.serialize()+'&action=iconmanager_save_options',function(r){
-                alert(r.success ? '<?php echo esc_js(__('Gespeichert','iconmanager')); ?>' : (r.data||'Error'));
-                btn.prop('disabled',false).text('💾 <?php echo esc_js(__('Speichern','iconmanager')); ?>');
-                if(r.success){ window.iconmanagerShowImport = frm.find('input[name="show_import"]').is(':checked'); applyImportVisibility(); }
+            ajaxAction({
+                action:'iconmanager_save_options',
+                data: frm.serialize(), // will become string; handled below
+                button: btn,
+                busyText:'<?php echo esc_js(__('Speichern…','iconmanager')); ?>',
+                restoreText:'💾 <?php echo esc_js(__('Speichern','iconmanager')); ?>',
+                onSuccess:function(r){ alert(r.success ? '<?php echo esc_js(__('Gespeichert','iconmanager')); ?>' : (r.data||'Error')); if(r.success){ window.iconmanagerShowImport = frm.find('input[name="show_import"]').is(':checked'); applyImportVisibility(); } }
             });
         });
 

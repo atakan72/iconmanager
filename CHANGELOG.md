@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - (add new entries here)
 
+## [1.1.1] - 2025-09-18
+### Fixed
+- Dynamisches Aktualisieren der Icon-Listen nach Download / Import (kein manueller Reload nötig).
+- Buttons blieben nicht mehr in Disabled/"…" Zustand hängen (zentraler ajaxAction Helper).
+- JSON Responses robust gegen vorherige Notices (toleranter Parser + Unterdrückung von Notices bei AJAX).
+- Menü von eigenem Top-Level zu Werkzeuge verschoben (besserer Kontext, Filter `iconmanager_admin_parent`).
+
+### Added
+- Ladeindikator während Icon-Liste neu aufgebaut wird.
+
+### Changed
+- Standard-Admin-Menüposition jetzt unter Werkzeuge.
+
 ## [1.1.0] - 2025-09-18
 ### Added
 - Initial public GitHub release (renamed from previous private variant).
@@ -25,5 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Old plugin specific prefix usage (kept aliases only for backward compatibility).
 
-[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/atakan72/iconmanager/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/atakan72/iconmanager/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/atakan72/iconmanager/releases/tag/v1.1.0
