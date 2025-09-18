@@ -78,7 +78,6 @@ function iconmanager_bootstrap() {
     'includes/services/media-import.php',
         'includes/admin/admin-page.php',
         'includes/frontend/icon-render.php',
-        'includes/services/gdpr-headers.php',
         'includes/compat/legacy-aliases.php'
     ];
     foreach ( $files as $rel ) {

@@ -2,9 +2,9 @@
 
 # Icon Manager
 
-Lightweight GDPR-friendly WordPress plugin to locally download & manage Brand (Simple Icons) and UI (Lucide) SVG icons – with caching, auto-download & optional Media Library import.
+Lightweight WordPress plugin to locally download & manage Brand (Simple Icons) and UI (Lucide) SVG icons – with caching, auto-download & optional Media Library import.
 
-<strong>DSGVO-konformes WordPress Plugin</strong> zum lokalen Download & zur Verwaltung von Brand (Social) und UI (Lucide) SVG Icons.
+<strong>DE:</strong> Lokales Verwalten & Herunterladen von Brand (Social) und UI (Lucide) SVG Icons mit Caching & optionalem Medien-Import.
 
 <p>
 <a href="https://github.com/atakan72/iconmanager/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-GPL--2.0--or--later-blue.svg"></a>
@@ -26,7 +26,7 @@ Lightweight GDPR-friendly WordPress plugin to locally download & manage Brand (S
     - [Parameter Reference](#parameter-reference)
   - [Media Library Import (Optional)](#media-library-import-optional)
   - [Caching \& Performance](#caching--performance)
-  - [GDPR / Privacy](#gdpr--privacy)
+  - [Localization](#localization)
   - [Icon Sources \& Licenses](#icon-sources--licenses)
   - [Development](#development)
   - [Contributing](#contributing)
@@ -35,7 +35,7 @@ Lightweight GDPR-friendly WordPress plugin to locally download & manage Brand (S
   - [License](#license)
 
 ## Why / Motivation
-Many themes embed remote icon CDNs (tracking / reliability issues). Icon Manager stores SVG files locally after first download and serves them with long-term cache & security headers. Minimal footprint, no frontend bloat.
+Many themes embed remote icon CDNs (tracking / reliability issues). Icon Manager stores SVG files locally after first download and serves them with long-term cache. Minimal footprint, no frontend bloat.
 
 ## Features
 - Batch & single AJAX download for Brand + UI icons
@@ -43,7 +43,7 @@ Many themes embed remote icon CDNs (tracking / reliability issues). Icon Manager
 - PHP helper: `iconmanager_render_icon()` and echo helper `iconmanager_icon()`
 - Auto-download missing icons when rendered in admin context
 - Object cache for rendered HTML (7 days) – invalidated on version change
-- Strong cache + security headers for delivered SVG / images
+- Strong cache headers for delivered SVG / images
 - Optional Media Library import (Gutenberg integration)
 - Built-in admin help & license panels (copyable credit snippet)
 - Legacy compatibility layer for old prefix (`iconmgmt_dsgvo_`) with `_doing_it_wrong` notice
@@ -57,7 +57,6 @@ Many themes embed remote icon CDNs (tracking / reliability issues). Icon Manager
 1. Download or clone: `git clone https://github.com/atakan72/iconmanager` into `wp-content/plugins/iconmanager`.
 2. Activate the plugin in WordPress.
 3. Go to Admin → Icons and trigger initial downloads (bulk or single).
-4. (Optional) Deactivate & remove the old `ICONMANAGEMENT.DSGVO` plugin after verifying migration.
 
 ### Composer / Packagist
 Not published (yet). For now install manually or as a Git submodule.
@@ -95,10 +94,10 @@ Each imported SVG is stored in the date-based uploads folder and tagged with met
 - Long-term immutable browser caching for served static SVG / image assets
 - Cache flushed automatically on plugin version change
 
-## GDPR / Privacy
-- All icons stored & served locally after first download
-- No external HTTP requests for visitors (only admin-triggered downloads)
-- Security headers: `nosniff`, `DENY` (iframe), `strict-origin-when-cross-origin` referrer policy
+## Localization
+- English source strings
+- German translation (`de_DE`)
+- Add your own: copy `languages/iconmanager.pot` → create `your-locale.po` & compile MO
 
 ## Icon Sources & Licenses
 - Lucide (ISC): https://lucide.dev/license
@@ -148,6 +147,8 @@ See [SECURITY.md](SECURITY.md). Report vulnerabilities via private advisory pref
 
 ## License
 GPL-2.0-or-later. See [LICENSE](LICENSE).
+
+Attribution request: Please credit the project (link to this repository) when feasible. This is appreciated but not legally required under GPL.
 
 ---
 Maintained by @atakan72
