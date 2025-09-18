@@ -3,7 +3,7 @@
  * Plugin Name: Icon Manager
  * Plugin URI: https://github.com/atakan72/iconmanager
  * Description: DSGVO-konformes Icon Management (Brand & UI) – lokal, caching, Admin-Oberfläche.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: Atakan Öcal
  * Author URI: https://github.com/atakan72
  * Text Domain: iconmanager
@@ -24,7 +24,7 @@ if ( ! defined( 'ICONMANAGER_URL' ) ) {
     define( 'ICONMANAGER_URL', plugin_dir_url( __FILE__ ) );
 }
 if ( ! defined( 'ICONMANAGER_VERSION' ) ) {
-    define( 'ICONMANAGER_VERSION', '1.1.2' );
+    define( 'ICONMANAGER_VERSION', '1.1.3' );
 }
 
 // Unterdrücke Notices in AJAX Antworten (zerstören sonst JSON). Nur für DOING_AJAX, nicht für normale Seiten.
@@ -74,8 +74,9 @@ function iconmanager_bootstrap() {
     $files = [
         'includes/helpers.php',
         'includes/services/icon-registry.php',
-    'includes/services/icon-downloader.php',
-    'includes/services/media-import.php',
+        'includes/services/icon-downloader.php',
+        'includes/services/media-import.php',
+        'includes/services/github-updater.php', // added GitHub updater
         'includes/admin/admin-page.php',
         'includes/frontend/icon-render.php',
         'includes/compat/legacy-aliases.php'
