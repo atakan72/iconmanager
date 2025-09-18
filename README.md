@@ -27,7 +27,6 @@ Lightweight WordPress plugin to locally download & manage Brand (Simple Icons) a
   - [Media Library Import (Optional)](#media-library-import-optional)
   - [Caching \& Performance](#caching--performance)
   - [Localization](#localization)
-  - [Auto-Updates (GitHub)](#auto-updates-github)
   - [Icon Sources \& Licenses](#icon-sources--licenses)
   - [Development](#development)
   - [Contributing](#contributing)
@@ -99,25 +98,6 @@ Each imported SVG is stored in the date-based uploads folder and tagged with met
 - English source strings
 - German translation (`de_DE`)
 - Add your own: copy `languages/iconmanager.pot` → create `your-locale.po` & compile MO
-
-## Auto-Updates (GitHub)
-The plugin can self-update directly from this GitHub repository (similar UX to wp.org plugins):
-1. Make sure the directory name is exactly `iconmanager`.
-2. When a new release is tagged on GitHub using a semver tag like `v1.1.3`, WordPress will detect it in the next update check (twice daily) or when you press "Check for updates".
-3. Click "Update now" on the Plugins screen – the ZIP served is GitHub's release archive.
-
-Release workflow for maintainers:
-```
-# Bump version in iconmanager.php & CHANGELOG.md
-# Commit & push
-git tag v1.1.3
-git push origin v1.1.3
-# (Optionally create a GitHub Release with notes – auto-updater uses the latest release API.)
-```
-Notes:
-- Caches: We cache GitHub API for 30 minutes; force refresh via "Check for updates" link.
-- Only the latest GitHub Release is considered (Drafts ignored). Use proper published releases.
-- Tag must start with `v` and follow semantic versioning.
 
 ## Icon Sources & Licenses
 - Lucide (ISC): https://lucide.dev/license
