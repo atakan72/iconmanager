@@ -1,0 +1,16 @@
+# WordPress plugin defaults
+/vendor/
+/node_modules/
+/composer.lock
+/package-lock.json
+/.idea/
+/.vscode/
+*.log
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+/dist/
+
+# OS / misc
+*.swp

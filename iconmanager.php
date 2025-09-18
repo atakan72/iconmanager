@@ -1,9 +1,11 @@
 <?php
 /**
  * Plugin Name: Icon Manager
+ * Plugin URI: https://github.com/atakan72/iconmanager
  * Description: DSGVO-konformes Icon Management (Brand & UI) – lokal, caching, Admin-Oberfläche.
  * Version: 1.1.0
  * Author: Atakan Öcal
+ * Author URI: https://github.com/atakan72
  * Text Domain: iconmanager
  * Domain Path: /languages
  * License: GPL-2.0-or-later
